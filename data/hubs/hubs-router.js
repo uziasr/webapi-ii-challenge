@@ -15,12 +15,13 @@ router.get('/', (req, res)=>{
 })
 
 
-// router.post('/', (req, res)=>{
-//     db.insert(req.body)
-//     .then(hub=>{
-//         res.status(201).json(hub)
-//     })
-//     .catch(error =>{
-//         res.status(500).json({message: 'error adding post'})
-//     })
-// })
+router.post('/', (req, res)=>{
+    ('title' in req.body & 'contents' in req.body)?
+    db.insert(req.body)
+    .then(hub=>{
+        res.status(201).json(req.body)
+    })
+    .catch(error =>{
+        res.status(500).json({ error: "There was an error while saving the post to the database" })
+    }): res.status(400).json({ errorMessage: "Please provide title and contents for the post." })
+})
