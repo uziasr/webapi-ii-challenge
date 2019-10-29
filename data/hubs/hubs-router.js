@@ -69,3 +69,14 @@ router.delete('/:id', (req, res)=>{
     .catch(err=> res.status(500).json({ error: "The post could not be removed" }))
 
 })
+
+router.put('/:id', (req,res)=>{
+    const id = req.params.id;
+    if ('title' in req.body & 'contents' in req.body){
+    db.update(id, req.body)
+    .then((post)=>{res.status(200).json()})
+    .catch(err=>{
+        res.status(500).json({ error: "The post information could not be modified." })
+    })
+}else {res.status(400).json({ errorMessage: "Please provide title and contents for the post."})}
+})
